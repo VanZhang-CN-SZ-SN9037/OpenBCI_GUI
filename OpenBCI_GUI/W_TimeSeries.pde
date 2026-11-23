@@ -366,7 +366,7 @@ class W_timeSeries extends Widget {
         String buttonText = "Time Series";
 
         if (visible && currentBoard.isStreaming()) {
-            PopupMessage msg = new PopupMessage("Info", "Streaming needs to be stopped before accessing Hardware Settings");
+            PopupMessage msg = new PopupMessage(t("info"), "Streaming needs to be stopped before accessing Hardware Settings");
             return;
         }
 
@@ -924,7 +924,7 @@ class PlaybackScrollbar {
                skipToStartButtonAction();
             }
         });
-        skipToStartButton.setDescription("Click to go back to the beginning of the file.");
+        skipToStartButton.setDescription(t("gotoStartTooltip"));
     }
 
     /////////////// Update loop for PlaybackScrollbar

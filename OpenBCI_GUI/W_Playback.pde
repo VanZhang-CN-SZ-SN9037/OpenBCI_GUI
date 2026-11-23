@@ -128,11 +128,11 @@ class W_playback extends Widget {
         selectPlaybackFileButton.setBorderColor(OBJECT_BORDER_GREY);
         selectPlaybackFileButton.onRelease(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
-                output("Select a file for playback");
+                output(t("selectPlaybackFile"));
                 selectInput("Select a pre-recorded file for playback:", "playbackSelectedWidgetButton");
             }
         });
-        selectPlaybackFileButton.setDescription("Click to open a dialog box to select an OpenBCI playback file (.txt or .csv).");
+        selectPlaybackFileButton.setDescription(t("playbackFileTooltip"));
         cp5ElementsToCheck.add((controlP5.Controller)selectPlaybackFileButton);
     }
 
@@ -195,7 +195,7 @@ void userSelectedPlaybackMenuList (String filePath, int listItem) {
         requestReinit();
     } else {
         verbosePrint("Playback: " + filePath);
-        outputError("Playback: Selected file does not exist. Try another file or clear settings to remove this entry.");
+        outputError(t("playbackMissing"));
     }
 }
 
@@ -234,8 +234,8 @@ boolean playbackFileSelected (String longName, String shortName) {
             if (!line.startsWith("%Board")) {
                 playbackData_fname = "N/A";
                 playbackData_ShortName = "N/A";
-                outputError("Found GUI v4 or earlier file. Please convert this file using the provided Python script.");
-                PopupMessage msg = new PopupMessage("GUI v4 to v5 File Converter", "Found GUI v4 or earlier file. Please convert this file using the provided Python script. Press the button below to access this open-source fix.", "LINK", "https://github.com/OpenBCI/OpenBCI_GUI/tree/development/tools");
+                outputError(t("foundV4File"));
+                PopupMessage msg = new PopupMessage(t("v4v5Converter"), "Found GUI v4 or earlier file. Please convert this file using the provided Python script. Press the button below to access this open-source fix.", "LINK", "https://github.com/OpenBCI/OpenBCI_GUI/tree/development/tools");
                 return false;
             }    
         } else if (line.equals("%STOP AT")) {
@@ -243,7 +243,7 @@ boolean playbackFileSelected (String longName, String shortName) {
             playbackData_fname = "N/A";
             sdData_fname = longName;
         } else {
-            outputError("ERROR: Tried to load an unsupported file for playback! Please try a valid file.");
+            outputError(t("unsupportedPlaybackFile"));
             playbackData_fname = "N/A";
             playbackData_ShortName = "N/A";
             sdData_fname = "N/A";   
@@ -271,7 +271,7 @@ boolean playbackFileSelected (String longName, String shortName) {
             JSONArray recentFilesArray = savePlaybackHistoryJSON.getJSONArray("playbackFileHistory");
             playbackHistoryFileExists = true;
         } catch (RuntimeException e) {
-            outputError("Found an error in UserPlaybackHistory.json. Deleting this file. Please, Restart the GUI.");
+            outputError(t("playbackHistoryJsonError"));
             File file = new File(userPlaybackHistoryFile);
             if (!file.isDirectory()) {
                 file.delete();

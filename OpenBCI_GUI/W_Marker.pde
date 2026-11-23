@@ -229,7 +229,7 @@ class W_Marker extends Widget {
         //Clear textfield on double click
         myTextfield.onDoublePress(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
-                output("Marker Widget: Enter your Marker Receiver IP Address or Port");
+                output(t("markerIpTooltip"));
                 myTextfield.clear();
             }
         });

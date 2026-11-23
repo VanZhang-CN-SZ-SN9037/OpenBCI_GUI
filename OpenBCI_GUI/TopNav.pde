@@ -23,6 +23,8 @@ class TopNav {
     public Button controlPanelCollapser;
 
     public Button toggleDataStreamingButton;
+    // 数据流是否已启动的状态标志（i18n 解耦：不再用按钮文案判断状态）
+    public boolean dataStreamActive = false;
 
     public Button filtersButton;
     public Button smoothingButton;
@@ -63,17 +65,17 @@ class TopNav {
         topNav_cp5.setAutoDraw(false);
 
         //TOP LEFT OF GUI
-        createControlPanelCollapser("System Control Panel", PAD_3, PAD_3, controlPanel_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
+        createControlPanelCollapser(t("systemControlPanel"), PAD_3, PAD_3, controlPanel_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
 
         //TOP RIGHT OF GUI, FROM LEFT<---Right
         createDebugButton(" ", width - DEBUG_BUT_W - PAD_3, PAD_3, DEBUG_BUT_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
-        createTutorialsButton("Help", (int)debugButton.getPosition()[0] - TOPRIGHT_BUT_W - PAD_3, PAD_3, TOPRIGHT_BUT_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
-        createIssuesButton("Issues", (int)tutorialsButton.getPosition()[0] - TOPRIGHT_BUT_W - PAD_3, PAD_3, TOPRIGHT_BUT_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
-        createShopButton("Shop", (int)issuesButton.getPosition()[0] - TOPRIGHT_BUT_W - PAD_3, PAD_3, TOPRIGHT_BUT_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
-        createUpdateGuiButton("Update", (int)shopButton.getPosition()[0] - TOPRIGHT_BUT_W - PAD_3, PAD_3, TOPRIGHT_BUT_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
+        createTutorialsButton(t("help"), (int)debugButton.getPosition()[0] - TOPRIGHT_BUT_W - PAD_3, PAD_3, TOPRIGHT_BUT_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
+        createIssuesButton(t("issues"), (int)tutorialsButton.getPosition()[0] - TOPRIGHT_BUT_W - PAD_3, PAD_3, TOPRIGHT_BUT_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
+        createShopButton(t("shop"), (int)issuesButton.getPosition()[0] - TOPRIGHT_BUT_W - PAD_3, PAD_3, TOPRIGHT_BUT_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
+        createUpdateGuiButton(t("update"), (int)shopButton.getPosition()[0] - TOPRIGHT_BUT_W - PAD_3, PAD_3, TOPRIGHT_BUT_W, TOPNAV_BUT_H, h3, 16, TOPNAV_DARKBLUE, WHITE);
 
         //SUBNAV TOP RIGHT
-        createTopNavSettingsButton("Settings", width - SUBNAV_BUT_W - PAD_3, SUBNAV_BUT_Y, SUBNAV_BUT_W, SUBNAV_BUT_H, h4, 14, SUBNAV_LIGHTBLUE, WHITE);
+        createTopNavSettingsButton(t("settings"), width - SUBNAV_BUT_W - PAD_3, SUBNAV_BUT_Y, SUBNAV_BUT_W, SUBNAV_BUT_H, h4, 14, SUBNAV_LIGHTBLUE, WHITE);
 
         layoutSelector = new LayoutSelector();
         tutorialSelector = new TutorialSelector();
@@ -88,11 +90,11 @@ class TopNav {
 
         if (!secondaryNavInit) {
             //Buttons on the left side of the GUI secondary nav bar
-            createToggleDataStreamButton(stopButton_pressToStart_txt, PAD_3, SUBNAV_BUT_Y, DATASTREAM_BUT_W, SUBNAV_BUT_H, h4, 14, TURN_ON_GREEN, OPENBCI_DARKBLUE);
-            createFiltersButton("Filters", PAD_3*2 + toggleDataStreamingButton.getWidth(), SUBNAV_BUT_Y, SUBNAV_BUT_W, SUBNAV_BUT_H, h4, 14, SUBNAV_LIGHTBLUE, WHITE);
+            createToggleDataStreamButton(t("startDataStream"), PAD_3, SUBNAV_BUT_Y, DATASTREAM_BUT_W, SUBNAV_BUT_H, h4, 14, TURN_ON_GREEN, OPENBCI_DARKBLUE);
+            createFiltersButton(t("filters"), PAD_3*2 + toggleDataStreamingButton.getWidth(), SUBNAV_BUT_Y, SUBNAV_BUT_W, SUBNAV_BUT_H, h4, 14, SUBNAV_LIGHTBLUE, WHITE);
 
             //Appears at Top Right SubNav while in a Session
-            createLayoutButton("Layout", width - 3 - 60, SUBNAV_BUT_Y, 60, SUBNAV_BUT_H, h4, 14, SUBNAV_LIGHTBLUE, WHITE);
+            createLayoutButton(t("layout"), width - 3 - 60, SUBNAV_BUT_Y, 60, SUBNAV_BUT_H, h4, 14, SUBNAV_LIGHTBLUE, WHITE);
             secondaryNavInit = true;
         }
 
@@ -311,7 +313,7 @@ class TopNav {
     }
 
     private String getSmoothingString() {
-        return ((SmoothingCapableBoard)currentBoard).getSmoothingActive() ? "Smoothing On" : "Smoothing Off";
+        return ((SmoothingCapableBoard)currentBoard).getSmoothingActive() ? t("smoothingOn") : t("smoothingOff");
     }
 
     private Button createTNButton(String name, String text, int _x, int _y, int _w, int _h, PFont _font, int _fontSize, color _bg, color _textColor) {
@@ -382,7 +384,7 @@ class TopNav {
                 }
             }
         });
-        layoutButton.setDescription("Here you can alter the overall layout of the GUI, allowing for different container configurations with more or less widgets.");
+        layoutButton.setDescription(t("layoutTooltip"));
     }
 
     private void createDebugButton(String text, int _x, int _y, int _w, int _h, PFont font, int _fontSize, color _bg, color _textColor) {
@@ -392,7 +394,7 @@ class TopNav {
                ConsoleWindow.display();
             }
         });
-        debugButton.setDescription("Click to open the Console Log window.");
+        debugButton.setDescription(t("consoleLogTooltip"));
     }
 
     private void createTutorialsButton(String text, int _x, int _y, int _w, int _h, PFont font, int _fontSize, color _bg, color _textColor) {
@@ -402,7 +404,7 @@ class TopNav {
                tutorialSelector.toggleVisibility();
             }
         });
-        tutorialsButton.setDescription("Click to find links to helpful online tutorials and getting started guides. Also, check out how to create custom widgets for the GUI!");
+        tutorialsButton.setDescription(t("tutorialsTooltip"));
     }
 
     private void createIssuesButton(String text, int _x, int _y, int _w, int _h, PFont font, int _fontSize, color _bg, color _textColor) {
@@ -413,7 +415,7 @@ class TopNav {
                openURLInBrowser("https://github.com/OpenBCI/OpenBCI_GUI/issues");
             }
         });
-        issuesButton.setDescription("If you have suggestions or want to share a bug you've found, please create an issue on the GUI's Github repo!");
+        issuesButton.setDescription(t("feedbackTooltip"));
     }
 
     private void createShopButton(String text, int _x, int _y, int _w, int _h, PFont font, int _fontSize, color _bg, color _textColor) {
@@ -423,7 +425,7 @@ class TopNav {
                openURLInBrowser("https://shop.openbci.com/");
             }
         });
-        shopButton.setDescription("Head to our online store to purchase the latest OpenBCI hardware and accessories.");
+        shopButton.setDescription(t("shopTooltip"));
     }
 
     private void createUpdateGuiButton(String text, int _x, int _y, int _w, int _h, PFont font, int _fontSize, color _bg, color _textColor) {
@@ -471,7 +473,7 @@ class TopNav {
                 }
             }
         });
-        settingsButton.setDescription("Save and Load GUI Settings! Click Default to revert to factory settings.");
+        settingsButton.setDescription(t("saveLoadSettingsTooltip"));
     }
 
     //Execute this function whenver the stop button is pressed
@@ -482,7 +484,7 @@ class TopNav {
             Integer checkingImpOnChan = ((ImpedanceSettingsBoard)currentBoard).isCheckingImpedanceOnChannel();
             //println("isCheckingImpedanceOnAnythingEZCHECK==",w_cytonImpedance.isCheckingImpedanceOnAnything);
             if (checkingImpOnChan != null || w_cytonImpedance.cytonMasterImpedanceCheckIsActive() || w_cytonImpedance.isCheckingImpedanceOnAnything) {
-                PopupMessage msg = new PopupMessage("Busy Checking Impedance", "Please turn off impedance check to begin recording the data stream.");
+                PopupMessage msg = new PopupMessage(t("busyCheckingImpedance"), "Please turn off impedance check to begin recording the data stream.");
                 println("OpenBCI_GUI::Cyton: Please turn off impedance check to begin recording the data stream.");
                 return;
             }
@@ -493,14 +495,16 @@ class TopNav {
             output("openBCI_GUI: stopButton was pressed. Stopping data transfer, wait a few seconds.");
             stopRunning();
             if (!currentBoard.isStreaming()) {
-                toggleDataStreamingButton.getCaptionLabel().setText(stopButton_pressToStart_txt);
+                dataStreamActive = false;
+                toggleDataStreamingButton.getCaptionLabel().setText(t("startDataStream"));
                 toggleDataStreamingButton.setColorBackground(TURN_ON_GREEN);
             }
         } else { //not running
             output("openBCI_GUI: startButton was pressed. Starting data transfer, wait a few seconds.");
             startRunning();
             if (currentBoard.isStreaming()) {
-                toggleDataStreamingButton.getCaptionLabel().setText(stopButton_pressToStop_txt);
+                dataStreamActive = true;
+                toggleDataStreamingButton.getCaptionLabel().setText(t("stopDataStream"));
                 toggleDataStreamingButton.setColorBackground(TURN_OFF_RED);
                 nextPlayback_millis = millis();  //used for synthesizeData and readFromFile.  This restarts the clock that keeps the playback at the right pace.
             }
@@ -508,12 +512,13 @@ class TopNav {
     }
 
     public boolean dataStreamingButtonIsActive() {
-        return toggleDataStreamingButton.getCaptionLabel().getText().equals(stopButton_pressToStop_txt);
+        return dataStreamActive;
     }
 
     public void resetStartStopButton() {
         if (toggleDataStreamingButton != null) {
-            toggleDataStreamingButton.getCaptionLabel().setText(stopButton_pressToStart_txt);
+            dataStreamActive = false;
+            toggleDataStreamingButton.getCaptionLabel().setText(t("startDataStream"));
             toggleDataStreamingButton.setColorBackground(TURN_ON_GREEN);
         }
     }
@@ -675,6 +680,7 @@ class ConfigSelector {
     public boolean isVisible;
     private ControlP5 settings_cp5;
     private Button expertMode;
+    private Button languageButton;
     private Button saveSessionSettings;
     private Button loadSessionSettings;
     private Button defaultSessionSettings;
@@ -711,17 +717,19 @@ class ConfigSelector {
         int buttonNumber = 0;
         createExpertModeButton("expertMode", "Turn Expert Mode On", x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
         buttonNumber++;
-        createSaveSettingsButton("saveSessionSettings", "Save", x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
+        createLanguageButton("languageButton", getLanguageButtonText(), x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
         buttonNumber++;
-        createLoadSettingsButton("loadSessionSettings", "Load", x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
+        createSaveSettingsButton("saveSessionSettings", t("save"), x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
         buttonNumber++;
-        createDefaultSettingsButton("defaultSessionSettings", "Default", x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
+        createLoadSettingsButton("loadSessionSettings", t("load"), x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
         buttonNumber++;
-        createClearAllSettingsButton("clearAllGUISettings", "Clear All", x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
+        createDefaultSettingsButton("defaultSessionSettings", t("default"), x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
+        buttonNumber++;
+        createClearAllSettingsButton("clearAllGUISettings", t("clearAll"), x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
         buttonNumber += 2;
-        createClearSettingsNoButton("clearAllSettingsNo", "No", x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
+        createClearSettingsNoButton("clearAllSettingsNo", t("no"), x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
         buttonNumber++;
-        createClearSettingsYesButton("clearAllSettingsYes", "Yes", x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
+        createClearSettingsYesButton("clearAllSettingsYes", t("yes"), x + margin, y + margin*(buttonNumber+1) + b_h*(buttonNumber), b_w, b_h);
     }
 
     public void update() {
@@ -790,11 +798,13 @@ class ConfigSelector {
         x = width - 70*multiplier - _padding;
         int dx = oldX - x;
 
-        h = !isSessionStarted ? margin*3 + b_h*2 : margin*6 + b_h*5;
+        // i18n：新增 Language 按钮，多留一个按钮高度
+        h = !isSessionStarted ? margin*4 + b_h*3 : margin*7 + b_h*6;
 
         //Update the Y position for the clear settings buttons
-        float clearSettingsButtonY = !isSessionStarted ? 
-            expertMode.getPosition()[1] + margin + b_h : 
+        // i18n：Clear All 按钮应跟在 Language 按钮下方，而非 Expert Mode 下方
+        float clearSettingsButtonY = !isSessionStarted ?
+            languageButton.getPosition()[1] + margin + b_h :
             defaultSessionSettings.getPosition()[1] + margin + b_h;
         clearAllGUISettings.setPosition(clearAllGUISettings.getPosition()[0], clearSettingsButtonY);
         clearAllSettingsNo.setPosition(clearAllSettingsNo.getPosition()[0], clearSettingsButtonY + margin*2 + b_h*2);
@@ -841,6 +851,23 @@ class ConfigSelector {
         updateConfigButtonPositions();
     }
 
+    private String getLanguageButtonText() {
+        return currentLanguage == Language.ZH ? "语言：中文" : "Language: English";
+    }
+
+    private void createLanguageButton(String name, String text, int _x, int _y, int _w, int _h) {
+        languageButton = createButton(settings_cp5, name, text, _x, _y, _w, _h, p5, 12, BUTTON_NOOBGREEN, WHITE);
+        languageButton.onRelease(new CallbackListener() {
+            public void controlEvent(CallbackEvent theEvent) {
+                toggleVisibility();
+                Language newLang = (currentLanguage == Language.ZH) ? Language.EN : Language.ZH;
+                guiSettings.setLanguage(newLang);
+                output(t("restartRequired"));
+            }
+        });
+        languageButton.setDescription("切换界面语言，需重启后生效。");
+    }
+
     private void createExpertModeButton(String name, String text, int _x, int _y, int _w, int _h) {
         expertMode = createButton(settings_cp5, name, text, _x, _y, _w, _h, p5, 12, BUTTON_NOOBGREEN, WHITE);
         expertMode.onRelease(new CallbackListener() {
@@ -855,7 +882,7 @@ class ConfigSelector {
                 guiSettings.setExpertMode(isActive ? ExpertModeEnum.ON : ExpertModeEnum.OFF);
             }
         });
-        expertMode.setDescription("Expert Mode enables advanced keyboard shortcuts and access to all GUI features.");
+        expertMode.setDescription(t("expertModeTooltip"));
     }
 
     private void createSaveSettingsButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -866,7 +893,7 @@ class ConfigSelector {
                 settings.saveButtonPressed();
             }
         });
-        saveSessionSettings.setDescription("Expert Mode enables advanced keyboard shortcuts and access to all GUI features.");
+        saveSessionSettings.setDescription(t("expertModeTooltip"));
     }
 
     private void createLoadSettingsButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -877,7 +904,7 @@ class ConfigSelector {
                 settings.loadButtonPressed();
             }
         });
-        loadSessionSettings.setDescription("Expert Mode enables advanced keyboard shortcuts and access to all GUI features.");
+        loadSessionSettings.setDescription(t("expertModeTooltip"));
     }
 
     private void createDefaultSettingsButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -888,7 +915,7 @@ class ConfigSelector {
                 settings.defaultButtonPressed();
             }
         });
-        defaultSessionSettings.setDescription("Expert Mode enables advanced keyboard shortcuts and access to all GUI features.");
+        defaultSessionSettings.setDescription(t("expertModeTooltip"));
     }
 
     private void createClearAllSettingsButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -902,7 +929,7 @@ class ConfigSelector {
                 h += clearAllSettingsPressed ? delta_h : -delta_h;
             }
         });
-        clearAllGUISettings.setDescription("This will clear all user settings and playback history. You will be asked to confirm.");
+        clearAllGUISettings.setDescription(t("clearAllTooltip"));
     }
 
     private void createClearSettingsNoButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -934,15 +961,15 @@ class ConfigSelector {
                 }
             }
         });
-        clearAllSettingsYes.setDescription("Clicking 'Yes' will delete all user settings and stop the session if running.");
+        clearAllSettingsYes.setDescription(t("deleteAllSettingsTooltip"));
     }
 
     public void toggleExpertModeFrontEnd(boolean b) {
         if (b) {
-            expertMode.getCaptionLabel().setText("Turn Expert Mode Off");
+            expertMode.getCaptionLabel().setText(t("turnExpertOff"));
             expertMode.setColorBackground(BUTTON_EXPERTPURPLE);
         } else {
-            expertMode.getCaptionLabel().setText("Turn Expert Mode On");
+            expertMode.getCaptionLabel().setText(t("turnExpertOn"));
             expertMode.setColorBackground(BUTTON_NOOBGREEN);
         }
     } 
@@ -1083,7 +1110,7 @@ class TutorialSelector {
                 toggleVisibility(); //shut layoutSelector if something is selected
             }
         });
-        gettingStarted.setDescription("Need help getting started? Click here to view the official OpenBCI Getting Started guides.");
+        gettingStarted.setDescription(t("gettingStartedTooltip"));
     }
 
     private void createTestingImpedanceButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -1094,7 +1121,7 @@ class TutorialSelector {
                 toggleVisibility(); //shut layoutSelector if something is selected
             }
         });
-        testingImpedance.setDescription("Click here to learn more about testing the impedance on electrodes using the OpenBCI GUI. This process is different for Cyton and Ganglion. Checking impedance only works with passive electrodes.");
+        testingImpedance.setDescription(t("impedanceTooltip"));
     }
 
     private void createTroubleshootingGuideButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -1105,7 +1132,7 @@ class TutorialSelector {
                 toggleVisibility(); //shut layoutSelector if something is selected
             }
         });
-        troubleshootingGuide.setDescription("Having trouble? Start here with some general troubleshooting tips found on the OpenBCI Docs.");
+        troubleshootingGuide.setDescription(t("troubleshootTooltip"));
     }
 
     private void createCustomWidgetsButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -1116,7 +1143,7 @@ class TutorialSelector {
                 toggleVisibility(); //shut layoutSelector if something is selected
             }
         });
-        customWidgets.setDescription("Click here to learn about creating your own custom OpenBCI widgets!");
+        customWidgets.setDescription(t("customWidgetTooltip"));
     }
 
     private void createOpenbciForumButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -1127,7 +1154,7 @@ class TutorialSelector {
                 toggleVisibility(); //shut layoutSelector if something is selected
             }
         });
-        openbciForum.setDescription("Click here to visit the official OpenBCI Forum.");
+        openbciForum.setDescription(t("forumTooltip"));
     }
 
     private void createFtdiBufferFixButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -1146,6 +1173,6 @@ class TutorialSelector {
                 toggleVisibility(); //shut layoutSelector if something is selected
             }
         });
-        openbciForum.setDescription("Click here to view information on how to lower the Cyton Dongle latency for your current operating system.");
+        openbciForum.setDescription(t("latencyTooltip"));
     }
 }

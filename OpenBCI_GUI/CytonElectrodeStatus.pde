@@ -349,7 +349,7 @@ class CytonElectrodeStatus {
                 w_cytonImpedance.toggleImpedanceOnElectrode(!cytonBoard.isCheckingImpedanceNorP(_chan, is_N_Pin), _chan, is_N_Pin, curMillis);
             }
         });
-        testing_button.setDescription("Click to toggle impedance check for this ADS pin.");
+        testing_button.setDescription(t("toggleImpedanceTooltip"));
     }
 
     public void resizeButton(Grid _dataTable) {
@@ -381,7 +381,7 @@ class CytonElectrodeStatus {
     }
 
     public void resetTestingButton() {
-        testing_button.getCaptionLabel().setText("Test");
+        testing_button.getCaptionLabel().setText(t("test"));
         testing_button.setOff();
     }
 

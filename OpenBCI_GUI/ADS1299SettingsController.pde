@@ -235,7 +235,7 @@ class ADS1299SettingsController {
             }
 
             if (!allChannelsInSync) {
-                PopupMessage msg = new PopupMessage("Info", "Highlighted channels have unapplied Hardware Settings. Please press \"Send\" button to sync with board or revert settings.");
+                PopupMessage msg = new PopupMessage(t("info"), "Highlighted channels have unapplied Hardware Settings. Please press \"Send\" button to sync with board or revert settings.");
                 return false;
             }
         }
@@ -251,11 +251,11 @@ class ADS1299SettingsController {
     private void createHWSettingsLoadButton(String name, String text, int _x, int _y, int _w, int _h) {
         loadButton = createButton(hwsCp5, name, text, _x, _y, _w, _h);
         loadButton.setBorderColor(OBJECT_BORDER_GREY);
-        loadButton.setDescription("Load hardware settings from file.");
+        loadButton.setDescription(t("loadHwSettingsTooltip"));
         loadButton.onClick(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
                 if (currentBoard.isStreaming()) {
-                    PopupMessage msg = new PopupMessage("Info", "Streaming needs to be stopped before loading hardware settings.");
+                    PopupMessage msg = new PopupMessage(t("info"), "Streaming needs to be stopped before loading hardware settings.");
                 } else {
                     selectInput("Select settings file to load", "loadHardwareSettings");
                 }
@@ -266,7 +266,7 @@ class ADS1299SettingsController {
     private void createHWSettingsSaveButton(String name, String text, int _x, int _y, int _w, int _h) {
         saveButton = createButton(hwsCp5, name, text, _x, _y, _w, _h);
         saveButton.setBorderColor(OBJECT_BORDER_GREY);
-        saveButton.setDescription("Save hardware settings to file.");
+        saveButton.setDescription(t("saveHwSettingsTooltip"));
         saveButton.onClick(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
                 selectOutput("Save settings to file", "storeHardwareSettings");
@@ -277,7 +277,7 @@ class ADS1299SettingsController {
     private void createHWSettingsSendButton(String name, String text, int _x, int _y, int _w, int _h) {
         sendButton = createButton(hwsCp5, name, text, _x, _y, _w, _h);
         sendButton.setBorderColor(OBJECT_BORDER_GREY);
-        sendButton.setDescription("Send hardware settings to the board.");
+        sendButton.setDescription(t("sendHwSettingsTooltip"));
         sendButton.onClick(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
 
@@ -298,11 +298,11 @@ class ADS1299SettingsController {
                 }
 
                 if (!atLeastOneChannelHasChanged) {
-                    output("No new settings to send to board.");
+                    output(t("noNewSettings"));
                 } else if (noErrors) {
                     outputSuccess("Hardware Settings sent to board!");
                 } else {
-                    PopupMessage msg = new PopupMessage("Error", "Failed to send one or more Hardware Settings to board. Check hardware and battery level. Cyton users, check that your dongle is connected with blue light shining.");
+                    PopupMessage msg = new PopupMessage(t("error"), "Failed to send one or more Hardware Settings to board. Check hardware and battery level. Cyton users, check that your dongle is connected with blue light shining.");
                 }         
             }
         });
@@ -399,7 +399,7 @@ class ADS1299SettingsController {
             .align(5, 10, 20, 40)
             .setAutoClear(false) //Don't clear textfield when pressing Enter key
             ;
-        customCommandTF.setDescription("Type a custom command and Send to board.");
+        customCommandTF.setDescription(t("customCommandTooltip"));
         //Clear textfield on double click
         customCommandTF.onDoublePress(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
@@ -543,7 +543,7 @@ class ADS1299SettingsController {
 
 void loadHardwareSettings(File selection) {
     if (selection == null) {
-        output("Hardware Settings file not selected.");
+        output(t("hwFileNotSelected"));
     } else {
         if (currentBoard instanceof ADS1299SettingsBoard) {
             if (((ADS1299SettingsBoard)currentBoard).getADS1299Settings().loadSettingsValues(selection.getAbsolutePath())) {
@@ -553,7 +553,7 @@ void loadHardwareSettings(File selection) {
                     w_timeSeries.adsSettingsController.updateHasUnappliedSettings(i);
                 }
             } else {
-                outputError("Failed to load Hardware Settings.");
+                outputError(t("hwLoadError"));
             }
         }
     }
@@ -561,13 +561,13 @@ void loadHardwareSettings(File selection) {
 
 void storeHardwareSettings(File selection) {
     if (selection == null) {
-        output("Hardware Settings file not selected.");
+        output(t("hwFileNotSelected"));
     } else {
         if (currentBoard instanceof ADS1299SettingsBoard) {
             if (((ADS1299SettingsBoard)currentBoard).getADS1299Settings().saveToFile(selection.getAbsolutePath())) {
                 outputSuccess("Hardware Settings Saved!");
             } else {
-                outputError("Failed to save Hardware Settings.");
+                outputError(t("hwSaveError"));
             }
         }
     }

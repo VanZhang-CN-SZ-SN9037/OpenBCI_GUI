@@ -22,7 +22,7 @@ void asyncLoadAudioFiles() {
             auditoryNfbGains[i] = new ddf.minim.ugens.Gain(-15.0f);
             auditoryNfbFilePlayers[i].patch(auditoryNfbGains[i]).patch(audioOutput);
         } catch (Exception e) {
-            outputError("AuditoryFeedback: Unable to load audio files. To enable this feature, please connect or turn on an audio device and restart the GUI.");
+            outputError(t("audioLoadError"));
             audioOutputIsAvailable = false;
             return;
         }
@@ -102,24 +102,24 @@ class AuditoryNeurofeedback {
         startStopButton.onRelease(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
                 if (!audioOutputIsAvailable) {
-                    outputError("AuditoryFeedback: Unable to load audio files. To enable this feature, please connect or turn on an audio device and restart the GUI.");
+                    outputError(t("audioLoadError"));
                     return;
                 }
                 //If using a TopNav object, ignore interaction with widget object (ex. widgetTemplateButton)
                 if (!topNav.configSelector.isVisible && !topNav.layoutSelector.isVisible) {
                     if (auditoryNfbFilePlayers[0].isPlaying()) {
                         killAudio();
-                        startStopButton.getCaptionLabel().setText("Turn Audio On");
+                        startStopButton.getCaptionLabel().setText(t("turnAudioOn"));
                     } else {
                         for (int i = 0; i < NUM_SOUND_FILES; i++) {
                             auditoryNfbFilePlayers[i].loop();
                         }
-                        startStopButton.getCaptionLabel().setText("Turn Audio Off");
+                        startStopButton.getCaptionLabel().setText(t("turnAudioOff"));
                     }
                 }
             }
         });
-        startStopButton.setDescription("Start and Stop Auditory Feedback.");
+        startStopButton.setDescription(t("auditoryFeedbackTooltip"));
     }
 
     private void createModeButton(int _x, int _y, int _w, int _h) {
@@ -138,7 +138,7 @@ class AuditoryNeurofeedback {
                 }
             }
         });
-        modeButton.setDescription("Change Auditory Feedback mode. Use the Metric to control all notes at once, or use Band Powers to control certain notes of the chord.");
+        modeButton.setDescription(t("auditoryModeTooltip"));
     }
 
 }

@@ -109,7 +109,7 @@ abstract class BoardBrainFlow extends Board {
             time_last_datapoint = -1.0;
         }
         catch (BrainFlowError e) {
-            outputError("ERROR: Exception when stopping stream. Please restart the Board and Session.");
+            outputError(t("stopStreamError"));
             e.printStackTrace();
             //If no data was received in X seconds, there is a serious problem with communications. Go ahead and stop trying to collect data.
             //Prevents feedback loop of errors.
@@ -264,7 +264,7 @@ abstract class BoardBrainFlow extends Board {
                     double timeout = 5.0;
                     if (cur_time - time_last_datapoint > timeout) {
                         if (data_popup_displayed == false) {
-                            PopupMessage msg = new PopupMessage("Data Streaming Error",
+                            PopupMessage msg = new PopupMessage(t("dataStreamingError"),
                                 "No new data received in " + timeout + " seconds. Please check your device and restart a GUI session.");
                         }
                         outputError("Data Streaming Error: No new data received in " + timeout + " seconds. Please check your device and restart a GUI session.");

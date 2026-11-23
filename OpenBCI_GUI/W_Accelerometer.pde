@@ -109,7 +109,7 @@ class W_Accelerometer extends Widget {
         lockElementsOnOverlapCheck(cp5ElementsToCheck);
         
         if(!accelBoard.canDeactivateAccelerometer() && !(currentBoard instanceof BoardCyton)) {
-            accelModeButton.getCaptionLabel().setText("Accel. On");
+            accelModeButton.getCaptionLabel().setText(t("accelOn"));
             accelModeButton.setColorBackground(BUTTON_LOCKED_GREY);
             accelModeButton.setLock(true);
         }
@@ -193,8 +193,8 @@ class W_Accelerometer extends Widget {
             public void controlEvent(CallbackEvent theEvent) {
                 if (!accelBoard.isAccelerometerActive()) {
                     accelBoard.setAccelerometerActive(true);
-                    output("Starting to read accelerometer");
-                    accelModeButton.getCaptionLabel().setText("Turn Accel. Off");
+                    output(t("startingAccel"));
+                    accelModeButton.getCaptionLabel().setText(t("turnAccelOff"));
                     if (currentBoard instanceof DigitalCapableBoard) {
                         w_digitalRead.toggleDigitalReadButton(false);
                     }
@@ -209,14 +209,14 @@ class W_Accelerometer extends Widget {
                 } else {
                     if (accelBoard.canDeactivateAccelerometer()) {
                         accelBoard.setAccelerometerActive(false);
-                        accelModeButton.getCaptionLabel().setText("Turn Accel. On");
+                        accelModeButton.getCaptionLabel().setText(t("turnAccelOn"));
                     } else {
                         accelModeButton.setOn();
                     }
                 }
             }
         });
-        accelModeButton.setDescription("Click to activate/deactivate the accelerometer for capable boards.");
+        accelModeButton.setDescription(t("accelTooltip"));
         if (accelBoard.canDeactivateAccelerometer() || (currentBoard instanceof BoardCyton)) {
             //Set button switch to On of it can be toggled
             accelModeButton.setOn();

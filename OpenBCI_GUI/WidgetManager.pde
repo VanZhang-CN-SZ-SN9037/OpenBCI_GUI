@@ -35,29 +35,29 @@ void setupWidgets(PApplet _this, ArrayList<Widget> w){
 
     //Widget_0 -- The Widget number helps when debugging GUI front-end
     w_timeSeries = new W_timeSeries(_this);
-    w_timeSeries.setTitle("Time Series");
+    w_timeSeries.setTitle(t("timeSeries"));
     addWidget(w_timeSeries, w);
 
     //Widget_1
     w_fft = new W_fft(_this);
-    w_fft.setTitle("FFT Plot");
+    w_fft.setTitle(t("fftPlot"));
     addWidget(w_fft, w);
 
     if (currentBoard instanceof AccelerometerCapableBoard) {
         w_accelerometer = new W_Accelerometer(_this);
-        w_accelerometer.setTitle("Accelerometer");
+        w_accelerometer.setTitle(t("accelerometer"));
         addWidget(w_accelerometer, w);
     }
 
     if (currentBoard instanceof BoardCyton) {
         w_cytonImpedance = new W_CytonImpedance(_this);
-        w_cytonImpedance.setTitle("Cyton Signal");
+        w_cytonImpedance.setTitle(t("cytonSignal"));
         addWidget(w_cytonImpedance, w);
     }
 
     if(currentBoard instanceof DataSourcePlayback){
         w_playback = new W_playback(_this);
-        w_playback.setTitle("Playback History");
+        w_playback.setTitle(t("playbackHistory"));
         addWidget(w_playback, w);
     }
 
@@ -65,69 +65,69 @@ void setupWidgets(PApplet _this, ArrayList<Widget> w){
     if(nchan == 4 && currentBoard instanceof BoardGanglion){
         //If using Ganglion, this is Widget_3
         w_ganglionImpedance = new W_GanglionImpedance(_this);
-        w_ganglionImpedance.setTitle("Ganglion Signal");
+        w_ganglionImpedance.setTitle(t("ganglionSignal"));
         addWidget(w_ganglionImpedance, w);
     }
 
     w_focus = new W_Focus(_this);
-    w_focus.setTitle("Focus Widget");
+    w_focus.setTitle(t("focusWidget"));
     addWidget(w_focus, w);
 
     w_networking = new W_Networking(_this);
-    w_networking.setTitle("Networking");
+    w_networking.setTitle(t("networking"));
     addWidget(w_networking, w);
 
     w_bandPower = new W_BandPower(_this);
-    w_bandPower.setTitle("Band Power");
+    w_bandPower.setTitle(t("bandPower"));
     addWidget(w_bandPower, w);
 
     w_headPlot = new W_HeadPlot(_this);
-    w_headPlot.setTitle("Head Plot");
+    w_headPlot.setTitle(t("headPlot"));
     addWidget(w_headPlot, w);
 
     w_emg = new W_emg(_this);
-    w_emg.setTitle("EMG");
+    w_emg.setTitle(t("emg"));
     addWidget(w_emg, w);
  
     w_emgJoystick = new W_EMGJoystick(_this);
-    w_emgJoystick.setTitle("EMG Joystick");
+    w_emgJoystick.setTitle(t("emgJoystick"));
     addWidget(w_emgJoystick, w);
 
     w_spectrogram = new W_Spectrogram(_this);
-    w_spectrogram.setTitle("Spectrogram");
+    w_spectrogram.setTitle(t("spectrogram"));
     addWidget(w_spectrogram, w);
 
     if(currentBoard instanceof AnalogCapableBoard){
         w_pulsesensor = new W_PulseSensor(_this);
-        w_pulsesensor.setTitle("Pulse Sensor");
+        w_pulsesensor.setTitle(t("pulseSensor"));
         addWidget(w_pulsesensor, w);
     }
 
     if(currentBoard instanceof DigitalCapableBoard) {
         w_digitalRead = new W_DigitalRead(_this);
-        w_digitalRead.setTitle("Digital Read");
+        w_digitalRead.setTitle(t("digitalRead"));
         addWidget(w_digitalRead, w);
     }
     
     if(currentBoard instanceof AnalogCapableBoard) {
         w_analogRead = new W_AnalogRead(_this);
-        w_analogRead.setTitle("Analog Read");
+        w_analogRead.setTitle(t("analogRead"));
         addWidget(w_analogRead, w);
     }
 
     if (currentBoard instanceof Board) {
         w_packetLoss = new W_PacketLoss(_this);
-        w_packetLoss.setTitle("Packet Loss");
+        w_packetLoss.setTitle(t("packetLoss"));
         addWidget(w_packetLoss, w);
     }
 
     w_marker = new W_Marker(_this);
-    w_marker.setTitle("Marker");
+    w_marker.setTitle(t("marker"));
     addWidget(w_marker, w);
     
     //DEVELOPERS: Here is an example widget with the essentials/structure in place
     w_template1 = new W_template(_this);
-    w_template1.setTitle("Widget Template 1");
+    w_template1.setTitle(t("widgetTemplate"));
     addWidget(w_template1, w);
 
     
@@ -224,7 +224,8 @@ class WidgetManager{
                     widgets.get(i).draw();
                     widgets.get(i).drawDropdowns();
                 }else{
-                    if(widgets.get(i).widgetTitle.equals("Networking")){
+                    // i18n 解耦：用类型判断而非标题文案（标题会翻译）
+                    if(widgets.get(i) instanceof W_Networking){
                         try{
                             w_networking.shutDown();
                         }catch (NullPointerException e){

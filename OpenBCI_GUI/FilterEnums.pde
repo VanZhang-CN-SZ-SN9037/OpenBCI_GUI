@@ -90,7 +90,7 @@ enum FilterActiveOnChannel implements FilterSettingsEnum {
     }
 
     public boolean isActive() {
-        return name.equals("Active");
+        return this == ON;
     }
 }
 

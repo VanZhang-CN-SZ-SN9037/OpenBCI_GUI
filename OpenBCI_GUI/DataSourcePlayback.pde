@@ -72,7 +72,7 @@ abstract class DataSourcePlayback implements DataSource, FileBoard  {
 
         boolean success = sampleRateExg > 0 && underlyingClassName != "";
         if(!success) {
-            outputError("Playback file does not contain the required header data.");
+            outputError(t("playbackHeaderError"));
         }
         return success;
     }
@@ -175,7 +175,7 @@ abstract class DataSourcePlayback implements DataSource, FileBoard  {
 
     @Override
     public void setEXGChannelActive(int channelIndex, boolean active) {
-        outputWarn("Deactivating channels is not possible for Playback board.");
+        outputWarn(t("noDeactivatePlayback"));
     }
 
     @Override

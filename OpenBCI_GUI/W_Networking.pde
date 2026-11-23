@@ -628,7 +628,7 @@ class W_Networking extends Widget {
                         startButton.getCaptionLabel().setText("Stop " + protocolMode + " Stream");
                         initializeStreams(); // Establish stream
                         startNetwork(); // Begin streaming
-                        output("Network Stream Started");
+                        output(t("networkStreamStarted"));
                     } catch (Exception e) {
                         e.printStackTrace();
                         String exception = e.toString();
@@ -644,11 +644,11 @@ class W_Networking extends Widget {
                     startButton.setColorBackground(TURN_ON_GREEN);
                     startButton.getCaptionLabel().setText("Start " + protocolMode + " Stream");
                     stopNetwork(); // Stop streams
-                    output("Network Stream Stopped");
+                    output(t("networkStreamStopped"));
                 }
             }
         });
-        startButton.setDescription("Click here to Start and Stop the network stream for the chosen protocol.");
+        startButton.setDescription(t("networkStreamTooltip"));
     }
 
     // Change appearance of networking start/stop button to Off
@@ -664,10 +664,10 @@ class W_Networking extends Widget {
         guideButton.onRelease(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
                 openURLInBrowser(NETWORKING_GUIDE_URL);
-                output("Opening Networking Widget Guide using default browser.");
+                output(t("openingNetWidgetGuide"));
             }
         });
-        guideButton.setDescription("Click to open the Networking Widget Guide in your default browser.");
+        guideButton.setDescription(t("netWidgetGuideTooltip"));
     }
 
     private void createDataOutputsButton() {
@@ -678,10 +678,10 @@ class W_Networking extends Widget {
         dataOutputsButton.onRelease(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
                 openURLInBrowser(NETWORKING_DATA_OUTPUTS_URL);
-                output("Opening Networking Data Outputs Guide using default browser.");
+                output(t("openingNetGuide"));
             }
         });
-        dataOutputsButton.setDescription("Click to open the Networking Data Outputs Guide in your default browser.");
+        dataOutputsButton.setDescription(t("netOutputGuideTooltip"));
     }
 
     /* Creating DataType Dropdowns */
@@ -1171,7 +1171,7 @@ class W_Networking extends Widget {
         // coms
         if (w_networking.protocolMode.equals("Serial")) {
             if (n == dataTypes.indexOf("FFT")) {
-                outputError("Please use Band Power instead of FFT for Serial Output. Changing data type...");
+                outputError(t("fftTooLarge"));
                 println("Networking: Changing data type from FFT to BandPower. FFT data is too large to send over Serial communication.");
                 cp5_networking_dropdowns.getController("dataType1").getCaptionLabel().setText("BandPower");
                 cp5_networking_dropdowns.get(ScrollableList.class, "dataType1")

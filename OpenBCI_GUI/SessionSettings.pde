@@ -307,7 +307,7 @@ class SessionSettings {
         try {
             this.save(defaultSettingsFileToSave); //to avoid confusion with save() image
         } catch (Exception e) {
-            outputError("Failed to save Default Settings during Init. Please submit an Issue on GitHub.");
+            outputError(t("saveDefaultError"));
             e.printStackTrace();
         }
     }
@@ -1069,7 +1069,7 @@ class SessionSettings {
             File f = new File(settingsFileToLoad);
             if (f.exists()) {
                 if (f.delete()) {
-                    outputError("Found old/broken GUI settings. Please reconfigure the GUI and save new settings.");
+                    outputError(t("oldSettingsError"));
                 } else {
                     outputError("SessionSettings: Error deleting old/broken settings file...");
                 }
@@ -1108,7 +1108,7 @@ class SessionSettings {
             this.load(defaultSettingsFileToLoad);
             outputSuccess("Default Settings Loaded!");
         } catch (Exception e) {
-            outputError("Default Settings Error: Valid Default Settings will be saved next system start.");
+            outputError(t("defaultSettingsError"));
             File f = new File(defaultSettingsFileToLoad);
             if (f.exists()) {
                 if (f.delete()) {
@@ -1157,11 +1157,11 @@ void loadConfigFile(File selection) {
         } catch (Exception e) {
             println("SessionSettings: Incompatible settings file or other error");
             if (settings.chanNumError == true) {
-                outputError("Settings Error:  Channel Number Mismatch Detected");
+                outputError(t("channelMismatch"));
             } else if (settings.dataSourceError == true) {
-                outputError("Settings Error: Data Source Mismatch Detected");
+                outputError(t("dataSourceMismatch"));
             } else {
-                outputError("Error trying to load settings file, possibly from previous GUI. Removing old settings.");
+                outputError(t("loadSettingsError"));
                 if (selection.exists()) selection.delete();
             }
         }

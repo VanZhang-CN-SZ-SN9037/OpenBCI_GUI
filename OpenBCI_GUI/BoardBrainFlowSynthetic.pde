@@ -71,7 +71,7 @@ class BoardBrainFlowSynthetic extends BoardBrainFlow implements AccelerometerCap
 
     @Override
     public void setAccelerometerActive(boolean active) {
-        outputWarn("Accelerometer is always active for BrainflowSyntheticBoard");
+        outputWarn(t("accelAlwaysActive"));
     }
 
     @Override

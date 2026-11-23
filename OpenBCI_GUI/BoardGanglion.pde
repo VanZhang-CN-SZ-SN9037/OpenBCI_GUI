@@ -14,13 +14,13 @@ class BoardGanglionNative extends BoardGanglion {
 
         if (name.indexOf("Ganglion 1.3") != -1) {
             this.firmwareVersion = 3;
-            output("Detected Ganglion firmware version 3");
+            output(t("ganglionFwV3"));
         }
         else {
             this.firmwareVersion = 2;
-            output("Detected Ganglion firmware version 2");
+            output(t("ganglionFwV2"));
             if (showUpgradePopup) {
-                PopupMessage msg = new PopupMessage("Warning", "Ganglion firmware version 2 detected. Please update to version 3 for better performance. \n\nhttps://docs.openbci.com/Ganglion/GanglionProgram");
+                PopupMessage msg = new PopupMessage(t("warning"), "Ganglion firmware version 2 detected. Please update to version 3 for better performance. \n\nhttps://docs.openbci.com/Ganglion/GanglionProgram");
             }
         }
     }
@@ -78,14 +78,14 @@ class BoardGanglionBLE extends BoardGanglion {
 
         if (deviceName.indexOf("Ganglion 1.3") != -1) {
             this.firmwareVersion = 3;
-            output("Detected Ganglion firmware version 3");
+            output(t("ganglionFwV3"));
         }
         else {
             this.firmwareVersion = 2;
             if (showUpgradePopup) {
-                PopupMessage msg = new PopupMessage("Warning", "Ganglion firmware version 2 detected. Please update to version 3 for better performance. \n\nhttps://docs.openbci.com/Ganglion/GanglionProgram");
+                PopupMessage msg = new PopupMessage(t("warning"), "Ganglion firmware version 2 detected. Please update to version 3 for better performance. \n\nhttps://docs.openbci.com/Ganglion/GanglionProgram");
             }
-            output("Detected Ganglion firmware version 2");
+            output(t("ganglionFwV2"));
         }
     }
 

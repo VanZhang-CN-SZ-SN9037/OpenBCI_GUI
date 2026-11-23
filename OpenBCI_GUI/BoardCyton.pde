@@ -477,7 +477,7 @@ implements ImpedanceSettingsBoard, AccelerometerCapableBoard, AnalogCapableBoard
         final Pair<Boolean, String> fullResponse = sendCommand(commandToSend);
         boolean response = fullResponse.getKey().booleanValue();
         if (!response) {
-            outputWarn("Cyton Impedance Check - Error sending impedance command to board.");
+            outputWarn(t("impedanceCmdError"));
             if (active) {
                 currentADS1299Settings.revertToLastValues(channel);
                 return new ImmutablePair<Boolean, String>(false, "Error");

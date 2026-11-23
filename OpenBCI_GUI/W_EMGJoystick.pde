@@ -325,7 +325,7 @@ class W_EMGJoystick extends Widget {
                 }
             }
         });
-        emgSettingsButton.setDescription("Click to open the EMG Settings UI to adjust how this metric is calculated.");
+        emgSettingsButton.setDescription(t("emgSettingsTooltip"));
     }
 
     private ScrollableList createEmgJoystickInputDropdown(String name, EmgJoystickInput joystickInput, int inputNumber) {

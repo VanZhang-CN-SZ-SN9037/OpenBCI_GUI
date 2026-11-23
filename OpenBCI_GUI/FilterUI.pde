@@ -293,7 +293,7 @@ class FilterUIPopup extends PApplet implements Runnable {
                 setUItoChannelMode(filterSettings.values.filterChannelSelect);
             } catch (Exception e) {
                 println(e.getMessage());
-                outputError("Filter Settings: Unable to apply settings. Please save Filter Settings to a new file.");
+                outputError(t("filterApplyError"));
             }
             filterSettingsWereLoadedFromFile = false;
         }   
@@ -556,7 +556,7 @@ class FilterUIPopup extends PApplet implements Runnable {
         //Clear textfield on double click
         myTextfield.onDoublePress(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
-                output("Custom Filtering: Enter your custom filter frequency.");
+                output(t("customFilterTooltip"));
                 myTextfield.clear();
             }
         });

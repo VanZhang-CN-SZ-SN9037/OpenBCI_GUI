@@ -92,7 +92,7 @@ class W_template extends Widget {
                 }
             }
         });
-        widgetTemplateButton.setDescription("Here is the description for this UI object. It will fade in as help text when hovering over the object.");
+        widgetTemplateButton.setDescription(t("uiObjectDescription"));
     }
 
     //add custom functions here

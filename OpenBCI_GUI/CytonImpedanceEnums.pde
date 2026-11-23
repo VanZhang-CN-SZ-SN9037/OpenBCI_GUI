@@ -24,7 +24,7 @@ public enum CytonSignalCheckMode implements IndexingInterface
     }
 
     public boolean getIsImpedanceMode() {
-        return label.equals("Impedance");
+        return this == IMPEDANCE;
     }
 
     private static List<String> getEnumStringsAsList() {
@@ -63,7 +63,7 @@ public enum CytonImpedanceLabels implements IndexingInterface
     }
 
     public boolean getIsAnatomicalName() {
-        return label.equals("Anatomical");
+        return this == ANATOMICAL;
     }
 
     private static List<String> getEnumStringsAsList() {

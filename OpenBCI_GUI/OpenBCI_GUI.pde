@@ -430,6 +430,11 @@ void setup() {
     guiSettings = new GuiSettings(directoryManager.getSettingsPath());
     userPlaybackHistoryFile = directoryManager.getSettingsPath()+"UserPlaybackHistory.json";
 
+    // i18n：初始化词表并应用已保存的语言（默认英文）
+    initLocalization();
+    setLanguage(guiSettings.getLanguage());
+    loadChineseFonts(); // 中文模式重载字体为 Noto Sans SC（须在 delayedSetup 建 UI 前）
+
     //open window
     ourApplet = this;
 
@@ -498,7 +503,7 @@ void delayedSetup() {
     guiSettings.applySettings();
 
     if (!isAdminUser() || isElevationNeeded()) {
-        outputError("OpenBCI_GUI: This application is not being run with Administrator access. This could limit the ability to connect to devices or read/write files.");
+        outputError(t("noAdminAccess"));
     }
 }
 
@@ -658,7 +663,7 @@ void initSystem() {
             //println(res.getKey().booleanValue(), res.getValue());
             if (res.getValue().startsWith("no daisy to attach")) {
                 haltSystem();
-                outputError("User selected Cyton+Daisy, but no Daisy is attached. Please change Channel Count to 8 Channels.");
+                outputError(t("daisyNotAttached"));
                 controlPanel.open();
                 return;
             }
@@ -704,7 +709,7 @@ void initSystem() {
 
     if (abandonInit) {
         haltSystem();
-        outputError("Failed to initialize board. Please check that the board is on and has power. See Console Log for more details.");
+        outputError(t("boardInitError"));
         controlPanel.open();
         return;
     } else {
@@ -787,7 +792,7 @@ void initFFTObjectsAndBuffer() {
         initializeFFTObjects(fftBuff, dataProcessingRawBuffer, getNfftSafe(), currentBoard.getSampleRate());
     } catch (ArrayIndexOutOfBoundsException e) {
         //e.printStackTrace();
-        outputError("Playback file load error. Try using a more recent recording.");
+        outputError(t("playbackLoadError"));
         return;
     }
 }
@@ -797,7 +802,7 @@ void startRunning() {
     dataLogger.onStartStreaming();
     currentBoard.startStreaming();
     if (currentBoard.isStreaming()) {
-        output("Data stream started.");
+        output(t("streamStarted"));
         // todo: this should really be some sort of signal that listeners can register for "OnStreamStarted"
         // close hardware settings if user starts streaming
         w_timeSeries.closeADSSettings();
@@ -807,10 +812,10 @@ void startRunning() {
             sessionTimeElapsed.resume();
         } catch (IllegalStateException e) {
             e.printStackTrace();
-            outputError("Failed to start Timer.");
+            outputError(t("timerStartError"));
         }
     } else {
-        outputError("Failed to start data stream. Please check hardware. See Console Log or BrainFlow Log for more details.");
+        outputError(t("streamStartError"));
     }
 }
 
@@ -819,17 +824,17 @@ void stopRunning() {
     if (currentBoard.isStreaming() && topNav.dataStreamingButtonIsActive()) {
         //If streaming, attempt to stop stream
         currentBoard.stopStreaming();
-        output("Data stream stopped.");
+        output(t("streamStopped"));
         try {
             streamTimeElapsed.stop();
             sessionTimeElapsed.suspend();
             dataLogger.onStopStreaming();
         } catch (IllegalStateException e) {
             e.printStackTrace();
-            outputError("GUI Error: Failed to stop Timer. Please make an issue on GitHub in the GUI repo.");
+            outputError(t("timerStopError"));
         }
     } else {
-        output("Data stream is already stopped.");
+        output(t("streamAlreadyStopped"));
     }
 }
 
@@ -840,7 +845,8 @@ void haltSystem() {
         
         //Reset the text for the Start Session buttonscreen. Skip when reiniting board while already in playback mode session.
         if (!reinitRequested) {
-            controlPanel.initBox.setInitSessionButtonText("START SESSION");
+            controlPanel.initBox.setInitSessionButtonText(t("startSession"));
+            controlPanel.initBox.sessionActive = false;
         }
 
         if (w_networking != null && w_networking.getNetworkActive()) {

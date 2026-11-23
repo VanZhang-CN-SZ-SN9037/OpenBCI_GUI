@@ -109,7 +109,7 @@ private int[] fetchAndParseJavaVersion() {
 private void checkIsOldVersionOfWindowsOS() {
     boolean isOld = SystemUtils.IS_OS_WINDOWS_7 || SystemUtils.IS_OS_WINDOWS_VISTA || SystemUtils.IS_OS_WINDOWS_XP;
     if (isOld) {
-        PopupMessage msg = new PopupMessage("Old Windows OS Detected", "OpenBCI GUI v5 and BrainFlow are made for 64-bit Windows 8, 8.1, and 10. Please update your OS, computer, or revert to GUI v4.2.0.");
+        PopupMessage msg = new PopupMessage(t("oldWindows"), "OpenBCI GUI v5 and BrainFlow are made for 64-bit Windows 8, 8.1, and 10. Please update your OS, computer, or revert to GUI v4.2.0.");
     }
 }
 
@@ -117,7 +117,7 @@ private void checkIsOldVersionOfWindowsOS() {
 private void checkIs64BitJava() {
     boolean is64Bit = System.getProperty("sun.arch.data.model").indexOf("64") >= 0;
     if (!is64Bit) {
-        PopupMessage msg = new PopupMessage("32-bit Java Detected", "OpenBCI GUI v5 and BrainFlow are made for 64-bit Java (Windows, Linux, and Mac). Please update your OS, computer, Processing IDE, or revert to GUI v4 or earlier.");
+        PopupMessage msg = new PopupMessage(t("java32Detected"), "OpenBCI GUI v5 and BrainFlow are made for 64-bit Java (Windows, Linux, and Mac). Please update your OS, computer, Processing IDE, or revert to GUI v4 or earlier.");
     }
 }
 /**
@@ -286,7 +286,7 @@ String getIpAddrFromStr(String strWithIP) {
     if (matcher.find()) {
         return matcher.group();
     } else{
-        output("Invalid Ip address");
+        output(t("invalidIp"));
         println("Provided Ip address doesn't match regexp");
         return "";
     }

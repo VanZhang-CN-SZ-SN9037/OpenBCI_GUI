@@ -64,7 +64,7 @@ void parseKey(char val) {
                 colorScheme = COLOR_SCHEME_DEFAULT;
             }
             //topNav.updateNavButtonsBasedOnColorScheme();
-            output("New Dark color scheme coming soon!");
+            output(t("darkSchemeSoon"));
             return;
 
         //deactivate channels 1-4

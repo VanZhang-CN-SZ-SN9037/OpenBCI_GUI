@@ -1225,7 +1225,7 @@ class NetworkStreamOut extends Thread {
             this.udp.setBuffer(20000);
             this.udp.listen(false);
             this.udp.log(false);
-            output("UDP successfully connected");
+            output(t("udpConnected"));
         } else if (this.protocol.equals("LSL")) {
             String stream_id = "openbcigui";
             info_data = new LSL.StreamInfo(this.streamName, this.streamType, this.numLslDataPoints,

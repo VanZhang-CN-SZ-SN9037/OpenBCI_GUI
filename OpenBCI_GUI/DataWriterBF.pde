@@ -23,15 +23,15 @@ public enum DataWriterBFEnum implements IndexingInterface
     }
 
     public boolean getIsDefaultLocation() {
-        return label.equals("Default");
+        return this == DEFAULT;
     }
 
     public boolean getIsCustomLocation() {
-        return label.equals("Custom");
+        return this == CUSTOM;
     }
 
     public boolean getIsTurnedOff() {
-        return label.equals("None");
+        return this == NONE;
     }
 }
 
@@ -102,7 +102,7 @@ public class DataWriterBF {
 void bfSelectedFolder(File selection) {
 
     if (selection == null) {
-        outputError("BrainFlow File Streamer: Window was closed or the user hit cancel. Please select a new file location or choose Default.");
+        outputError(t("bfWindowClosed"));
         dataLogger.setBfWriterFolder(null, null);
         return;
     }

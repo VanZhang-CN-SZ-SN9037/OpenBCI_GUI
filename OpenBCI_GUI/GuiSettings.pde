@@ -35,6 +35,7 @@ public class GuiSettingsValues {
     public ExpertModeEnum expertMode = ExpertModeEnum.OFF;
     public boolean showCytonSmoothingPopup = true;
     public boolean showGanglionUpgradePopup = true;
+    public String language = "en"; // i18n：默认英文
 
     public GuiSettingsValues() {
     }
@@ -44,7 +45,7 @@ class GuiSettings {
 
     private GuiSettingsValues values;
     private String filename;
-    private List<String> valueKeys = Arrays.asList("expertMode", "showCytonSmoothingPopup", "showGanglionUpgradePopup");
+    private List<String> valueKeys = Arrays.asList("expertMode", "showCytonSmoothingPopup", "showGanglionUpgradePopup", "language");
 
     GuiSettings(String settingsDirectory) {
 
@@ -137,12 +138,15 @@ class GuiSettings {
             foundKeys.add(mapKey);
         }
 
-        Collections.sort(valueKeys);
-        Collections.sort(foundKeys);
-
-        boolean isEqual = valueKeys.equals(foundKeys);
-
-        return isEqual;
+        // 向后兼容：旧 JSON 缺 language 字段时仍判为有效（Gson 会用默认值 "en" 补齐）。
+        // 只有缺少「旧有必填键」之一才判为不兼容并重置。
+        List<String> requiredKeys = Arrays.asList("expertMode", "showCytonSmoothingPopup", "showGanglionUpgradePopup");
+        for (String requiredKey : requiredKeys) {
+            if (!foundKeys.contains(requiredKey)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     //Call this method at the end of GUI main Setup in OpenBCI_GUI.pde to make sure everything exists
@@ -176,5 +180,14 @@ class GuiSettings {
 
     public boolean getShowGanglionUpgradePopup() {
         return values.showGanglionUpgradePopup;
+    }
+
+    public void setLanguage(Language lang) {
+        values.language = lang.getCode();
+        saveToFile();
+    }
+
+    public Language getLanguage() {
+        return Language.fromString(values.language);
     }
 }

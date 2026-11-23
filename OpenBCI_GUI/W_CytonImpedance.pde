@@ -451,7 +451,7 @@ class W_CytonImpedance extends Widget {
                 }
             }
         });
-        myButton.setDescription("Click to check impedance on all electrodes. Please allow time for commands to be sent to the board.");
+        myButton.setDescription(t("checkAllImpedanceTooltip"));
         return myButton;
     }
 
@@ -475,7 +475,7 @@ class W_CytonImpedance extends Widget {
                 });
             }
         });
-        myButton.setDescription("Click to reset all channel settings to default.");
+        myButton.setDescription(t("resetChannelTooltip"));
         return myButton;
     }
 
@@ -534,7 +534,7 @@ class W_CytonImpedance extends Widget {
                         boolean response = fullResponse.getKey().booleanValue();
                         if (!response) {
                             println("Board Communication Error: Error sending impedance test commands. See additional info in Console Log. You may need to reset the hardware.");
-                            PopupMessage msg = new PopupMessage("Board Communication Error", "Error sending impedance test commands during Check All Channels. See additional info in Console Log. You may need to reset the hardware.");
+                            PopupMessage msg = new PopupMessage(t("boardCommError"), "Error sending impedance test commands during Check All Channels. See additional info in Console Log. You may need to reset the hardware.");
                             cytonImpedanceMasterCheck.setOff();
                         } else {
                             //If successful, update the front end components to reflect the new state
@@ -578,7 +578,7 @@ class W_CytonImpedance extends Widget {
         } catch (RejectedExecutionException e) {
             println("CytonImpedanceError::"+e.getMessage());
             outputError("Cyton Signal Check Error: Please be patient when pressing \'Check All Channels\' button!");
-            PopupMessage msg = new PopupMessage("Cyton Signal Check Error", "Please be patient when pressing \'Check All Channels\' button! You will likely need to restart a GUI session and turn the Cyton off and on.");
+            PopupMessage msg = new PopupMessage(t("cytonSignalCheckError"), "Please be patient when pressing \'Check All Channels\' button! You will likely need to restart a GUI session and turn the Cyton off and on.");
         }
     }
 

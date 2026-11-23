@@ -41,8 +41,8 @@ class W_BandPower extends Widget {
         cp5ElementsToCheck.addAll(bpChanSelect.getCp5ElementsForOverlapCheck());
         
         //Add settings dropdowns
-        addDropdown("Smoothing", "Smooth", Arrays.asList(settings.fftSmoothingArray), smoothFac_ind); //smoothFac_ind is a global variable at the top of W_HeadPlot.pde
-        addDropdown("UnfiltFilt", "Filters?", Arrays.asList(settings.fftFilterArray), settings.fftFilterSave);
+        addDropdown("Smoothing", t("smoothing"), Arrays.asList(settings.fftSmoothingArray), smoothFac_ind); //smoothFac_ind is a global variable at the top of W_HeadPlot.pde
+        addDropdown("UnfiltFilt", t("filters"), Arrays.asList(settings.fftFilterArray), settings.fftFilterSave);
 
         // Setup for the BandPower plot
         bp_plot = new GPlot(_parent, x, y-navHeight, w, h+navHeight);

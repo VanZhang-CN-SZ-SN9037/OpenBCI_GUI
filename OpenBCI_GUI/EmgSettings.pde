@@ -22,7 +22,7 @@ class EmgSettings {
             Gson gson = new Gson();
             EmgSettingsValues tempValues = gson.fromJson(fileContents.toString(), EmgSettingsValues.class);
             if (tempValues.window.length != channelCount) {
-                outputError("Emg Settings: Loaded EMG Settings file has different number of channels than the current board.");
+                outputError(t("emgChannelMismatch"));
                 return false;
             }
             //Explicitely copy values over to avoid reference issues
@@ -39,9 +39,9 @@ class EmgSettings {
             File f = new File(filename);
             if (f.exists()) {
                 if (f.delete()) {
-                    outputError("Emg Settings: Could not load EMG settings from disk. Deleting this file...");
+                    outputError(t("emgLoadError"));
                 } else {
-                    outputError("Emg Settings: Error deleting old/broken EMG settings file! Please make sure the GUI has proper read/write permissions.");
+                    outputError(t("emgDeleteError"));
                 }
             }
             return false;
@@ -112,7 +112,7 @@ class EmgSettings {
 //Used by button in the EMG UI. Must be global and public. Called in above loadSettings method.
 public void loadEmgSettings(File selection) {
     if (selection == null) {
-        output("EMG Settings file not selected.");
+        output(t("emgFileNotSelected"));
     } else {
         if (dataProcessing.emgSettings.loadSettingsValues(selection.getAbsolutePath())) {
             outputSuccess("EMG Settings Loaded!");
@@ -124,12 +124,12 @@ public void loadEmgSettings(File selection) {
 //Used by button in the EMG UI. Must be global and public. Called in above storeSettings method.
 public void storeEmgSettings(File selection) {
     if (selection == null) {
-        output("EMG Settings file not selected.");
+        output(t("emgFileNotSelected"));
     } else {
         if (dataProcessing.emgSettings.saveToFile(selection.getAbsolutePath())) {
             outputSuccess("EMG Settings Saved!");
         } else {
-            outputError("Failed to save EMG Settings.");
+            outputError(t("emgSaveError"));
         }
     }
 }

@@ -103,7 +103,7 @@ class W_DigitalRead extends Widget {
 
         if (!digitalBoard.canDeactivateDigital()) {
             digitalModeButton.setLock(true);
-            digitalModeButton.getCaptionLabel().setText("Digital Read On");
+            digitalModeButton.getCaptionLabel().setText(t("digitalReadOn"));
             digitalModeButton.setColorBackground(BUTTON_LOCKED_GREY);
         }
     }
@@ -165,7 +165,7 @@ class W_DigitalRead extends Widget {
             public void controlEvent(CallbackEvent theEvent) {
                 if (!digitalBoard.isDigitalActive()) {
                     digitalBoard.setDigitalActive(true);
-                    digitalModeButton.getCaptionLabel().setText("Turn Digital Read Off");	
+                    digitalModeButton.getCaptionLabel().setText(t("turnDigitalOff"));	
                     if (selectedProtocol == BoardProtocol.WIFI) {
                         output("Starting to read digital inputs on pin marked D11, D12 and D17");
                     } else {
@@ -176,8 +176,8 @@ class W_DigitalRead extends Widget {
                     w_pulsesensor.toggleAnalogReadButton(false);
                 } else {
                     digitalBoard.setDigitalActive(false);
-                    digitalModeButton.getCaptionLabel().setText("Turn Digital Read On");
-                    output("Starting to read accelerometer");
+                    digitalModeButton.getCaptionLabel().setText(t("turnDigitalOn"));
+                    output(t("startingAccel"));
                     w_accelerometer.accelBoardSetActive(true);
                     w_analogRead.toggleAnalogReadButton(false);
                     w_pulsesensor.toggleAnalogReadButton(false);

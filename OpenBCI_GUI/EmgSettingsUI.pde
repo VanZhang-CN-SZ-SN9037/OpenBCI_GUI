@@ -146,7 +146,7 @@ class EmgSettingsUI extends PApplet implements Runnable {
             emgCp5.draw();
         } catch (ConcurrentModificationException e) {
             e.printStackTrace();
-            outputError("EMG Settings UI: Unable to draw cp5 objects.");
+            outputError(t("emgDrawError"));
         }
     }
 
@@ -176,7 +176,7 @@ class EmgSettingsUI extends PApplet implements Runnable {
                 updateCp5Objects();
             } catch (Exception e) {
                 e.printStackTrace();
-                outputError("EMG Settings UI: Unable to apply settings. Please save EMG Settings to a new file.");
+                outputError(t("emgApplyError"));
             }
             dataProcessing.emgSettings.setSettingsWereLoaded(false);
         }

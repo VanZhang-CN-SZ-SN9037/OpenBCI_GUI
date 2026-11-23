@@ -294,7 +294,7 @@ public class DataWriterBDF {
             File tempFile = new File(tempWriterPrefix);
             if (Files.deleteIfExists(tempFile.toPath())) {
                 println("closeFile: BDF+ temporary file deleted.");
-                output("BDF+ file has been made.");
+                output(t("bdfMade"));
             } else {
                 println("closeFile: error deleting temp file");
             }

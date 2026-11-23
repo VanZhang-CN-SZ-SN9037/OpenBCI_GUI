@@ -106,15 +106,15 @@ class W_GanglionImpedance extends Widget {
                         println("Starting Ganglion impedance check...");
                         //Start impedance check
                         ganglionBoard.setCheckingImpedance(true);
-                        startStopCheck.getCaptionLabel().setText("Stop Impedance Check");
+                        startStopCheck.getCaptionLabel().setText(t("stopImpedanceCheck"));
                     } else {
                         //Stop impedance check
                         ganglionBoard.setCheckingImpedance(false);
-                        startStopCheck.getCaptionLabel().setText("Start Impedance Check");
+                        startStopCheck.getCaptionLabel().setText(t("startImpedanceCheck"));
                     }
                 }
             }
         });
-        startStopCheck.setDescription("Click this button to start or stop checking impedance.");
+        startStopCheck.setDescription(t("impedanceCheckTooltip"));
     }
 };

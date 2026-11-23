@@ -172,7 +172,7 @@ class DataSourceSDCard implements DataSource, FileBoard, AccelerometerCapableBoa
 
     @Override
     public void setEXGChannelActive(int channelIndex, boolean active) {
-        outputWarn("Deactivating channels is not possible for Playback board.");
+        outputWarn(t("noDeactivatePlayback"));
     }
 
     @Override

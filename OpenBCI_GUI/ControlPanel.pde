@@ -386,7 +386,7 @@ class DataSourceBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("DATA SOURCE", x + padding, y + padding);
+        text(t("dataSourceUppercase"), x + padding, y + padding);
         popStyle();
         
         datasource_cp5.draw();
@@ -398,7 +398,7 @@ class DataSourceBox {
         // sourceList.itemHeight = 28;
         // sourceList.padding = 9;
         sourceList.addItem("CYTON (live)", DATASOURCE_CYTON);
-        sourceList.addItem("GANGLION (live)", DATASOURCE_GANGLION);
+        sourceList.addItem(t("ganglionLiveLabel"), DATASOURCE_GANGLION);
         sourceList.addItem("PLAYBACK (from file)", DATASOURCE_PLAYBACKFILE);
         sourceList.addItem("SYNTHETIC (algorithmic)", DATASOURCE_SYNTHETIC);
         sourceList.addItem("STREAMING (from external)", DATASOURCE_STREAMING);
@@ -471,7 +471,7 @@ class SerialBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("SERIAL CONNECT", x + padding, y + padding);
+        text(t("serialConnectUppercase"), x + padding, y + padding);
         popStyle();
 
         if (selectedProtocol == BoardProtocol.SERIAL) {
@@ -509,7 +509,7 @@ class SerialBox {
                 }
             }
         });
-        popOutRadioConfigButton.setDescription("Having trouble connecting to Cyton? Click here to access Radio Configuration tools.");
+        popOutRadioConfigButton.setDescription(t("radioConfigTooltip"));
     }
 };
 
@@ -564,7 +564,7 @@ class ComPortBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("SERIAL/COM PORT", x + padding, y + padding);
+        text(t("serialComPortUppercase"), x + padding, y + padding);
         popStyle();
 
         cytoncpb_cp5.draw();
@@ -602,11 +602,11 @@ class ComPortBox {
             if (cytonRadioCfg.get_channel()) {
                 controlPanel.initBox.initButtonPressed();
             } else {                
-                outputWarn("Found a Cyton dongle, but could not connect to the board. Auto-Scanning now...");
+                outputWarn(t("foundDongleAutoscan"));
                 midAutoScan = true;
             }
         } else {
-            outputWarn("No Cyton dongles were found.");
+            outputWarn(t("noCytonDongle"));
         }
     }
 
@@ -617,7 +617,7 @@ class ComPortBox {
             println("Successfully connected to Cyton using " + openBCI_portName);
             controlPanel.initBox.initButtonPressed();
         } else {
-            outputError("Unable to connect to Cyton. Please check hardware and power source.");
+            outputError(t("unableConnectCyton"));
         }
     }
 
@@ -723,7 +723,7 @@ class BLEBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("BLE DEVICES", x + padding, y + padding);
+        text(t("bleDevicesUppercase"), x + padding, y + padding);
         popStyle();
 
         if (bleIsRefreshing) {
@@ -743,10 +743,10 @@ class BLEBox {
 
     private void refreshGanglionNativeList() {
         if (bleIsRefreshing) {
-            output("Search for Ganglions using Native Bluetooth is in progress.");
+            output(t("searchNativeBle"));
             return;
         }
-        output("Refreshing available Ganglions using Native Bluetooth...");
+        output(t("refreshNativeBle"));
         bleList.items.clear();
         
         Thread thread = new Thread(){
@@ -777,10 +777,10 @@ class BLEBox {
 
     private void refreshGanglionBLEList() {
         if (bleIsRefreshing) {
-            output("Search for Ganglions using BLED112 Dongle is in progress.");
+            output(t("searchBled112"));
             return;
         }
-        output("Refreshing available Ganglions using BLED112 Dongle...");
+        output(t("refreshBled112"));
         bleList.items.clear();
         
         Thread thread = new Thread(){
@@ -801,7 +801,7 @@ class BLEBox {
                         e.printStackTrace();
                     }
                 } else {
-                    outputError("No BLED112 Dongle Found");
+                    outputError(t("noBled112"));
                 }
                 refreshBLE.getCaptionLabel().setText("START SEARCH");
                 bleIsRefreshing = false;
@@ -908,7 +908,7 @@ class WifiBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("WIFI SHIELDS", x + padding, y + padding);
+        text(t("wifiShieldsUppercase"), x + padding, y + padding);
         popStyle();
 
         wifiDynamic_x = x + padding;
@@ -922,7 +922,7 @@ class WifiBox {
             fill(OPENBCI_DARKBLUE);
             textFont(h3, 16);
             textAlign(LEFT, TOP);
-            text("ENTER IP ADDRESS", x + padding, y + h - 24 - 12 - padding*2);
+            text(t("enterIPAddress"), x + padding, y + h - 24 - 12 - padding*2);
             popStyle();
             staticIPAddressTF.setPosition(x + padding, y + h - 24 - padding);
         } else {
@@ -960,7 +960,7 @@ class WifiBox {
     }
 
     public void refreshWifiList() {
-        output("Wifi Devices Refreshing");
+        output(t("wifiRefreshing"));
         wifiList.items.clear();
         Thread thread = new Thread(){
             public void run() {
@@ -1117,7 +1117,7 @@ class InterfaceBoxCyton {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("PICK TRANSFER PROTOCOL", x + padding, y + padding);
+        text(t("pickTransferProtocolUp"), x + padding, y + padding);
         popStyle();
 
         ifbc_cp5.draw();
@@ -1202,7 +1202,7 @@ class InterfaceBoxGanglion {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("PICK TRANSFER PROTOCOL", x + padding, y + padding);
+        text(t("pickTransferProtocolUp"), x + padding, y + padding);
         popStyle();
         
         ifbg_cp5.draw();
@@ -1327,9 +1327,9 @@ class SessionDataBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("SESSION DATA", x + padding, y + padding);
+        text(t("sessionDataUppercase"), x + padding, y + padding);
         textFont(p4, 14);
-        text("Name", x + padding, y + padding*2 + 14);
+        text(t("name"), x + padding, y + padding*2 + 14);
         popStyle();
         
         //Update the position of UI elements here, as this changes when user selects WiFi mode
@@ -1352,7 +1352,7 @@ class SessionDataBox {
             int extraPadding = 20;
             fill(OPENBCI_DARKBLUE);
             textFont(p4, 14);
-            text("Max File Duration", maxDurText_x, y + h - 24 - padding + extraPadding);
+            text(t("maxFileDuration"), maxDurText_x, y + h - 24 - padding + extraPadding);
             popStyle();
         }
         sessionData_cp5.draw();
@@ -1378,7 +1378,7 @@ class SessionDataBox {
         //Clear textfield on double click
         sessionNameTextfield.onDoublePress(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
-                output("SessionData: Enter your custom session name.");
+                output(t("enterSessionName"));
                 sessionNameTextfield.clear();
             }
         });
@@ -1468,7 +1468,7 @@ class SessionDataBox {
                 autogenerateSessionName();
             }
         });
-        autoSessionName.setDescription("Autogenerate a session name based on the date and time.");
+        autoSessionName.setDescription(t("autogenSessionTooltip"));
     }
 
     private void createODFButton(String name, String text, int dataLoggerFormat, int _x, int _y, int _w, int _h) {
@@ -1502,7 +1502,7 @@ class SessionDataBox {
     }
 
     private void autogenerateSessionName() {
-        output("Autogenerated Session Name based on current date & time.");
+        output(t("autogenSessionName"));
         sessionNameTextfield.setText(directoryManager.getFileNameDateTime());
     }
 
@@ -1591,7 +1591,7 @@ class ChannelCountBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("CHANNEL COUNT ", x + padding, y + padding);
+        text(t("channelCountUppercase") + " ", x + padding, y + padding);
         fill(OPENBCI_DARKBLUE); //set color to green
         textFont(h3, 16);
         textAlign(LEFT, TOP);
@@ -1690,7 +1690,7 @@ class SampleRateGanglionBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("SAMPLE RATE ", x + padding, y + padding);
+        text(t("sampleRateUppercase") + " ", x + padding, y + padding);
         fill(OPENBCI_DARKBLUE); //set color to green
         textFont(h3, 16);
         textAlign(LEFT, TOP);
@@ -1790,7 +1790,7 @@ class SampleRateCytonBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("SAMPLE RATE ", x + padding, y + padding);
+        text(t("sampleRateUppercase") + " ", x + padding, y + padding);
         fill(OPENBCI_DARKBLUE); //set color to green
         textFont(h3, 16);
         textAlign(LEFT, TOP);
@@ -1884,7 +1884,7 @@ class SyntheticChannelCountBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("CHANNEL COUNT", x + padding, y + padding);
+        text(t("channelCountUppercase"), x + padding, y + padding);
         fill(OPENBCI_DARKBLUE); //set color to green
         textFont(h3, 16);
         textAlign(LEFT, TOP);
@@ -2003,7 +2003,7 @@ class RecentPlaybackBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("PLAYBACK HISTORY", x + padding, y + padding);
+        text(t("playbackHistoryUp"), x + padding, y + padding);
         popStyle();
         recentPlaybackSL.setVisible(true);
         rpb_cp5.draw();
@@ -2096,7 +2096,7 @@ class RecentPlaybackBox {
                         playbackFileFromList(filePath, s);
                     } else {
                         verbosePrint("Playback History: " + filePath);
-                        outputError("Playback History: Selected file does not exist. Try another file or clear settings to remove this entry.");
+                        outputError(t("playbackHistoryMissing"));
                     }
                 }
             }
@@ -2161,13 +2161,13 @@ class BrainFlowStreamerBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("BRAINFLOW STREAMER", x + padding, y + padding);
+        text(t("brainflowStreamer"), x + padding, y + padding);
         textFont(p4, 14);
         if (outputToFile.isOn()) {
-            text("Location", x + padding, streamerTextfieldY + 2);
+            text(t("location"), x + padding, streamerTextfieldY + 2);
         } else if (outputToNetwork.isOn()) {
-            text("IP", x + padding, streamerTextfieldY + 2);
-            text("Port", x + w - padding*2 - port.getWidth() - 14 - padding, streamerTextfieldY + 2);
+            text(t("ip"), x + padding, streamerTextfieldY + 2);
+            text(t("port"), x + w - padding*2 - port.getWidth() - 14 - padding, streamerTextfieldY + 2);
         }
         popStyle();
         
@@ -2582,7 +2582,7 @@ class PlaybackFileBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("PLAYBACK FILE", x + padding, y + padding);
+        text(t("playbackFileLabel"), x + padding, y + padding);
         popStyle();
 
         pbfb_cp5.draw();
@@ -2592,21 +2592,21 @@ class PlaybackFileBox {
         selectPlaybackFile = createButton(pbfb_cp5, name, text, _x, _y, _w, _h);
         selectPlaybackFile.onRelease(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
-                output("Select a file for playback");
+                output(t("selectPlaybackFile"));
                 selectInput("Select a pre-recorded file for playback:", 
                             "playbackFileSelected",
                             new File(directoryManager.getGuiDataPath() + "Recordings")
                 );
             }
         });
-        selectPlaybackFile.setDescription("Click to open a dialog box to select an OpenBCI playback file (.txt or .csv).");
+        selectPlaybackFile.setDescription(t("playbackFileTooltip"));
     }
 
     private void createSampleDataButton(String name, String text, int _x, int _y, int _w, int _h) {
         sampleDataButton = createButton(pbfb_cp5, name, text, _x, _y, _w, _h, p5, 12, buttonsLightBlue, color(255));
         sampleDataButton.onRelease(new CallbackListener() {
             public void controlEvent(CallbackEvent theEvent) {
-                output("Select a file for playback");
+                output(t("selectPlaybackFile"));
                 selectInput("Select a pre-recorded file for playback:", 
                             "playbackFileSelected", 
                             new File(directoryManager.getGuiDataPath() + "Sample_Data" + System.getProperty("file.separator") + "OpenBCI-sampleData-2-meditation.txt")
@@ -2614,7 +2614,7 @@ class PlaybackFileBox {
             }
         });
         //sampleDataButton.setCornerRoundness((int)(sampleDataButton_h));
-        sampleDataButton.setDescription("Click to open the folder containing OpenBCI GUI Sample Data.");
+        sampleDataButton.setDescription(t("sampleDataTooltip"));
     }
 };
 
@@ -2659,7 +2659,7 @@ class SDBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("WRITE TO SD CARD?", x + padding, y + padding);
+        text(t("writeToSDCard"), x + padding, y + padding);
         //draw backgrounds to dropdown scrollableLists ... unfortunately ControlP5 doesn't have this by default, so we have to hack it to make it look nice...
         popStyle();
 
@@ -2770,7 +2770,7 @@ class RadioConfigBox {
         fill(OPENBCI_DARKBLUE);
         textFont(h3, 16);
         textAlign(LEFT, TOP);
-        text("RADIO CONFIGURATION", x + padding, y + padding);
+        text(t("radioConfigUppercase"), x + padding, y + padding);
         popStyle();
 
         rcb_cp5.draw();
@@ -2822,7 +2822,7 @@ class RadioConfigBox {
                 controlPanel.hideChannelListCP();
             }
         });
-        autoscanButton.setDescription("Scan through channels and connect to a nearby Cyton. This button solves most connection issues!");
+        autoscanButton.setDescription(t("autoscanTooltip"));
     }
 
     private void createSystemStatusButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -2833,7 +2833,7 @@ class RadioConfigBox {
                 controlPanel.hideChannelListCP();
             }
         });
-        systemStatusButton.setDescription("Get connection status and the current channel of your Cyton and USB Dongle.");
+        systemStatusButton.setDescription(t("connectionStatusTooltip"));
     }
 
     private void createSetChannelButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -2844,7 +2844,7 @@ class RadioConfigBox {
                 controlPanel.channelPopup.setTitleChangeChannel();
             }
         });
-        setChannelButton.setDescription("Change the channel of your Cyton and USB Dongle.");
+        setChannelButton.setDescription(t("changeCytonDongleChannel"));
     }
 
     private void createOverrideChannelButton(String name, String text, int _x, int _y, int _w, int _h) {
@@ -2855,7 +2855,7 @@ class RadioConfigBox {
                 controlPanel.channelPopup.setTitlteOvrDongle();
             }
         });
-        ovrChannelButton.setDescription("Change the channel of the USB Dongle only.");
+        ovrChannelButton.setDescription(t("changeDongleChannelOnly"));
     }
 };
 
@@ -2929,6 +2929,8 @@ class InitBox {
     public int x, y, w, h, padding; //size and position
     private ControlP5 initBox_cp5;
     public Button initSystemButton;
+    // 会话是否已启动的状态标志（i18n 解耦：不再用按钮文案判断状态）
+    public boolean sessionActive = false;
 
     InitBox(int _x, int _y, int _w, int _h, int _padding) {
         x = _x;
@@ -2942,7 +2944,7 @@ class InitBox {
         initBox_cp5.setGraphics(ourApplet, 0,0);
         initBox_cp5.setAutoDraw(false);
 
-        createStartSessionButton("startSessionButton", "START SESSION", x + padding, y + padding, w-padding*2, h - padding*2);
+        createStartSessionButton("startSessionButton", t("startSession"), x + padding, y + padding, w-padding*2, h - padding*2);
     }
 
     public void update() {
@@ -2974,32 +2976,33 @@ class InitBox {
 
     //This is the primary method called when Start/Stop Session Button is pressed in Control Panel
     public void initButtonPressed() {
-        if (getInitSessionButtonText().equals("START SESSION")) {
+        if (!sessionActive) {
             if ((eegDataSource == DATASOURCE_CYTON && selectedProtocol == BoardProtocol.NONE) || (eegDataSource == DATASOURCE_GANGLION && selectedProtocol == BoardProtocol.NONE)) {
-                outputWarn("No Transfer Protocol selected. Please select your Transfer Protocol and retry system initiation.");
+                outputWarn(t("noTransferProtocol"));
                 return;
             } else if (eegDataSource == DATASOURCE_CYTON && selectedProtocol == BoardProtocol.SERIAL && openBCI_portName == "N/A") { //if data source == normal && if no serial port selected OR no SD setting selected
-                outputWarn("No Serial/COM port selected. Attempting to AUTO-CONNECT to Cyton.");
+                outputWarn(t("noSerialPort"));
                 controlPanel.comPortBox.attemptAutoConnectCyton();   
                 return;
             } else if (eegDataSource == DATASOURCE_CYTON && selectedProtocol == BoardProtocol.WIFI && wifi_portName == "N/A" && controlPanel.getWifiSearchStyle() == controlPanel.WIFI_DYNAMIC) {
-                outputWarn("No Wifi Shield selected. Please select your Wifi Shield and retry system initiation.");
+                outputWarn(t("noWifiShield"));
                 return;
             } else if (eegDataSource == DATASOURCE_PLAYBACKFILE && playbackData_fname == "N/A" && sdData_fname == "N/A") { //if data source == playback && playback file == 'N/A'
-                outputWarn("No playback file selected. Please select a playback file and retry system initiation.");        // tell user that they need to select a file before the system can be started
+                outputWarn(t("noPlaybackFile"));        // tell user that they need to select a file before the system can be started
                 return;
             } else if (eegDataSource == DATASOURCE_GANGLION && (selectedProtocol == BoardProtocol.NATIVE_BLE || selectedProtocol == BoardProtocol.BLED112) && ganglion_portName == "N/A") {
-                outputWarn("No BLE device selected. Please select your Ganglion device and retry system initiation.");
+                outputWarn(t("noBleDevice"));
                 return;
             } else if (eegDataSource == DATASOURCE_GANGLION && selectedProtocol == BoardProtocol.WIFI && wifi_portName == "N/A" && controlPanel.getWifiSearchStyle() == controlPanel.WIFI_DYNAMIC) {
-                outputWarn("No Wifi Shield selected. Please select your Wifi Shield and retry system initiation.");
+                outputWarn(t("noWifiShield"));
                 return;
             } else if (eegDataSource == -1) {//if no data source selected
-                outputWarn("No DATA SOURCE selected. Please select a DATA SOURCE and retry system initiation.");//tell user they must select a data source before initiating system
+                outputWarn(t("noDataSource"));//tell user they must select a data source before initiating system
                 return;
             } else { //otherwise, initiate system!
                 //verbosePrint("ControlPanel: CPmouseReleased: init");
-                setInitSessionButtonText("STOP SESSION");
+                sessionActive = true;
+                setInitSessionButtonText(t("stopSession"));
                 // Global steps to START SESSION
                 // Prepare the serial port
 
@@ -3013,12 +3016,13 @@ class InitBox {
 
                 //Set this flag to true, and draw "Starting Session..." to screen after then next draw() loop
                 midInit = true;
-                output("Attempting to Start Session..."); // Show this at the bottom of the GUI
+                output(t("startingSession")); // Show this at the bottom of the GUI
                 println("initButtonPressed: Calling initSystem() after next draw()");
             }
         } else {
             //if system is already active ... stop session and flip button state back
-            setInitSessionButtonText("START SESSION");
+            sessionActive = false;
+            setInitSessionButtonText(t("startSession"));
             topNav.setLockTopLeftSubNavCp5Objects(false); //Unlock top left subnav buttons
             //creates new data file name so that you don't accidentally overwrite the old one
             controlPanel.dataLogBoxCyton.setSessionTextfieldText(directoryManager.getFileNameDateTime());

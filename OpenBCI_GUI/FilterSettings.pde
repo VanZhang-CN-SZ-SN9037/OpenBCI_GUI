@@ -171,13 +171,13 @@ class FilterSettings {
 //Used by button in the Filter UI. Must be global and public.
 public void loadFilterSettings(File selection) {
     if (selection == null) {
-        output("Filters Settings file not selected.");
+        output(t("filtersFileNotSelected"));
     } else {
         if (filterSettings.loadSettingsValues(selection.getAbsolutePath())) {
             outputSuccess("Filter Settings Loaded!");
             filterSettingsWereLoadedFromFile = true;
         } else {
-            outputError("Failed to load Filter Settings. The old/broken file has been deleted.");
+            outputError(t("filterLoadError"));
         }
     }
 }
@@ -185,12 +185,12 @@ public void loadFilterSettings(File selection) {
 //Used by button in the Filter UI. Must be global and public.
 public void storeFilterSettings(File selection) {
     if (selection == null) {
-        output("Filter Settings file not selected.");
+        output(t("filterFileNotSelected"));
     } else {
         if (filterSettings.saveToFile(selection.getAbsolutePath())) {
             outputSuccess("Filter Settings Saved!");
         } else {
-            outputError("Failed to save Filter Settings.");
+            outputError(t("filterSaveError"));
         }
     }
 }
