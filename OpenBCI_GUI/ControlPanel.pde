@@ -642,26 +642,43 @@ class ComPortBox {
     }
 
     private LinkedList<String> getCytonComPorts() {
-        final String[] names = {"FT231X USB UART", "VCP"};
+        // 兼容更多串口设备：不再限定 FTDI Cyton 白名单（FT231X USB UART / VCP），
+        // 改为枚举所有 USB 转串口设备，让 STM32 VCP、CH340、CP2102、FTDI 等任意
+        // 采集板都能被列出并尝试连接。
+        // macOS 上仅保留真正的 USB 转串口设备（usbmodem/usbserial/wchusbserial/SLAB 等），
+        // 过滤掉系统伪串口（debug-console、Bluetooth-Incoming-Port、wlan-debug 等），
+        // 避免自动连接误选系统调试口。
         final SerialPort[] comPorts = SerialPort.getCommPorts();
         LinkedList<String> results = new LinkedList<String>();
         for (SerialPort comPort : comPorts) {
-            for (String name : names) {
-                if (comPort.toString().startsWith(name)) {
-                    // on macos need to drop tty ports
-                    if (isMac() && comPort.getSystemPortName().startsWith("tty")) {
-                        continue;
-                    }
-                    String found = "";
-                    if (isMac() || isLinux()) found += "/dev/";
-                    found += comPort.getSystemPortName();
-                    println("ControlPanel: Found Cyton Dongle on COM port: " + found);
-                    results.add(found);
-                }
+            String portName = comPort.getSystemPortName();
+            // on macos need to drop tty ports
+            if (isMac() && portName.startsWith("tty")) {
+                continue;
             }
+            // 过滤系统伪串口：仅保留真正的 USB 转串口设备
+            if (!isUsbSerialPort(portName)) {
+                continue;
+            }
+            String found = "";
+            if (isMac() || isLinux()) found += "/dev/";
+            found += portName;
+            println("ControlPanel: Found serial port: " + found
+                + " (" + comPort.getPortDescription() + ")");
+            results.add(found);
         }
 
         return results;
+    }
+
+    // 判断是否为真正的 USB 转串口设备（而非 macOS 系统伪串口）
+    private boolean isUsbSerialPort(String portName) {
+        String lower = portName.toLowerCase();
+        return lower.contains("usbmodem")      // CDC-ACM（STM32 等）
+            || lower.contains("usbserial")     // FTDI
+            || lower.contains("wchusbserial")  // CH340/CH341
+            || lower.contains("slab_usbtouart")// Silicon Labs CP210x
+            || lower.contains("cu.usb");       // 其它 USB 串口（通用兜底）
     }
 
     public boolean isAutoScanningForCytonSerial() {
